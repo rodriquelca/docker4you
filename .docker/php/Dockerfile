@@ -2,7 +2,19 @@
 FROM php:7.4-fpm-alpine
 
 # Install extensions
-RUN docker-php-ext-install pdo_mysql bcmath opcache
+
+
+RUN apk add --update --no-cache \
+    autoconf g++ imagemagick imagemagick-dev libtool make pcre-dev \
+    libzip-dev \
+    zip 
+
+RUN pecl install imagick \
+ && docker-php-ext-enable imagick
+
+RUN docker-php-ext-install pdo_mysql bcmath opcache pcntl exif zip
+
+
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
