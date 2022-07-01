@@ -9,7 +9,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./src/backend:/var/www/backend
+      - ./src/backend:/var/www/processmaker
       - ./.docker/nginx/conf.d:/etc/nginx/conf.d
       - phpmyadmindata:/var/www/phpmyadmin
     depends_on:
