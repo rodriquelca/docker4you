@@ -9,14 +9,14 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./src/backend:/var/www/processmaker
+      - ./src/processmaker:/var/www/processmaker
       - ./.docker/nginx/conf.d:/etc/nginx/conf.d
       - phpmyadmindata:/var/www/phpmyadmin
     depends_on:
       - processmaker
       - phpmyadmin
 
-  # Backend Service
+  # Processmaker Service
   processmaker:
     build:
       context: ./.docker/php
