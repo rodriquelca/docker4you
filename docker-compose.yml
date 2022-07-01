@@ -32,7 +32,7 @@ services:
 
   # MySQL Service
   mysql:
-    image: mysql/mysql-server:8.0
+    image: mysql/mysql-server:5.7
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: "%"
