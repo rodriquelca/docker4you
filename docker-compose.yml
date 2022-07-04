@@ -15,7 +15,14 @@ services:
     depends_on:
       - processmaker
       - phpmyadmin
-
+    
+  socat:
+    image: bpack/socat
+    command: TCP4-LISTEN:2375,fork,reuseaddr UNIX-CONNECT:/var/run/docker.sock
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+    expose:
+        - "2375"
   # Processmaker Service
   processmaker:
     build:
@@ -28,7 +35,10 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-
+    environment:
+      - DOCKER_HOST=tcp://socat:2375
+    links:
+      - socat
 
   # MySQL Service
   mysql:

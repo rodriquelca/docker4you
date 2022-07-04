@@ -8,7 +8,22 @@ RUN apk add --update --no-cache \
     autoconf g++ imagemagick imagemagick-dev libtool make pcre-dev \
     libzip-dev \
     zip \
-    libpng
+    libpng \
+    freetype-dev libpng-dev libjpeg-turbo-dev
+    
+    
+RUN  apk add --update --no-cache docker openrc
+#RUN rc-update add docker boot 
+
+#
+# docker client
+#
+ENV DOCKERVERSION=20.10.5
+RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKERVERSION}.tgz \
+  && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 \
+                 -C /usr/local/bin docker/docker \
+  && rm docker-${DOCKERVERSION}.tgz
+RUN rc-update add docker boot 
 
 RUN pecl install imagick \
  && docker-php-ext-enable imagick
