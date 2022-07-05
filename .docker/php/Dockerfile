@@ -23,7 +23,6 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${
   && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 \
                  -C /usr/local/bin docker/docker \
   && rm docker-${DOCKERVERSION}.tgz
-RUN rc-update add docker boot 
 
 RUN pecl install imagick \
  && docker-php-ext-enable imagick
@@ -46,4 +45,21 @@ ARG HOST_UID
 RUN adduser --disabled-password --gecos "" --uid $HOST_UID demo
 
 # Switch to that user
-USER demo
+# USER demo
+
+
+
+# ARG PM_VERSION
+
+# WORKDIR /tmp
+# RUN wget https://github.com/ProcessMaker/processmaker/archive/refs/tags/v${PM_VERSION}.zip
+# RUN unzip v${PM_VERSION}.zip && rm -rf /code/pm4 && mv processmaker-${PM_VERSION} /code/pm4
+
+# WORKDIR /var/www/processmaker
+# RUN composer install
+# COPY build-files/laravel-echo-server.json /var/www/processmaker
+# RUN npm install --unsafe-perm=true
+
+# COPY build-files/laravel-echo-server.json .
+# COPY build-files/init.sh .
+# CMD bash init.sh && supervisord --nodaemon
