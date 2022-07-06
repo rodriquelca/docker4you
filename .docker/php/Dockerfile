@@ -44,22 +44,13 @@ RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 ARG HOST_UID
 RUN adduser --disabled-password --gecos "" --uid $HOST_UID demo
 
+
+
+#
+# node
+#
+
+RUN apk add --update nodejs npm
+
 # Switch to that user
 # USER demo
-
-
-
-# ARG PM_VERSION
-
-# WORKDIR /tmp
-# RUN wget https://github.com/ProcessMaker/processmaker/archive/refs/tags/v${PM_VERSION}.zip
-# RUN unzip v${PM_VERSION}.zip && rm -rf /code/pm4 && mv processmaker-${PM_VERSION} /code/pm4
-
-# WORKDIR /var/www/processmaker
-# RUN composer install
-# COPY build-files/laravel-echo-server.json /var/www/processmaker
-# RUN npm install --unsafe-perm=true
-
-# COPY build-files/laravel-echo-server.json .
-# COPY build-files/init.sh .
-# CMD bash init.sh && supervisord --nodaemon

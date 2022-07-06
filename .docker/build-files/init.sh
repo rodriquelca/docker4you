@@ -15,20 +15,20 @@ set -ex
 
 if [ ! -f ".env" ]; then
 
-    # while ! mysqladmin ping -u pm -ppass -h mysql --silent; do
-    #     echo "Waiting for mysql"
-    #     sleep 1
-    # done
+    while ! mysqladmin ping -u pm -ppass -h mysql --silent; do
+        echo "Waiting for mysql"
+        sleep 1
+    done
 
-    # if [ "${PM_APP_PORT}" = "80" ]; then
-    #     PORT_WITH_PREFIX=""
-    # else
-    #     PORT_WITH_PREFIX=":${PM_APP_PORT}"
-    # fi
+    if [ "${PM_APP_PORT}" = "80" ]; then
+        PORT_WITH_PREFIX=""
+    else
+        PORT_WITH_PREFIX=":${PM_APP_PORT}"
+    fi
 
     php artisan processmaker:install --no-interaction \
-    --url=http://processmaker.demo.test \
-    --broadcast-host=http://processmaker.demo.test:6004 \
+    --url=${PM_APP_URL}${PORT_WITH_PREFIX} \
+    --broadcast-host=${PM_APP_URL}:${PM_BROADCASTER_PORT} \
     --username=admin \
     --password=admin123 \
     --email=admin@processmaker.com \
@@ -36,15 +36,15 @@ if [ ! -f ".env" ]; then
     --last-name=User \
     --db-host=mysql \
     --db-port=3306 \
-    --db-name=demo \
-    --db-username=root \
-    --db-password=root \
+    --db-name=processmaker \
+    --db-username=pm \
+    --db-password=pass \
     --data-driver=mysql \
     --data-host=mysql \
     --data-port=3306 \
-    --data-name=demo \
-    --data-username=root \
-    --data-password=root \
+    --data-name=processmaker \
+    --data-username=pm \
+    --data-password=pass \
     --redis-host=redis
     
 
